@@ -22,6 +22,7 @@ public class Searcher {
         try {
             Reader reader = new Reader();
             String prefix = reader.readConsole();
+            readFile(prefix);
             search(prefix);
         } catch (RuntimeException e) {
             System.err.println("Что-то пошло не так! Перезапустите программу.");
