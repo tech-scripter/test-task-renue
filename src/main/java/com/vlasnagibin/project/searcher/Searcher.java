@@ -60,6 +60,7 @@ public class Searcher {
         for (int i = 0; i < arrayList.size(); i++) {
             indexItems[i] = arrayList.get(i);
         }
+
         return indexItems;
     }
 
@@ -73,9 +74,11 @@ public class Searcher {
         int counter = 0;
         try (RandomAccessFile randomAccessFile = new RandomAccessFile(path, "r")) {
             long minIndex = findBound(indexItems, prefix, false);
+
             if (minIndex == -1) {
                 return;
             }
+
             long maxIndex = findBound(indexItems, prefix, true);
             for (long i = minIndex; i <= maxIndex; i++) {
                 randomAccessFile.seek(indexItems[(int) i].getOffset());
@@ -86,6 +89,7 @@ public class Searcher {
             e.printStackTrace();
             System.err.println("Файл не найден!");
         }
+
         System.out.printf("%nКоличество найденных строк: %d%n", counter);
         System.out.printf("Времени потрачено на поиск: %d мс%n", (System.currentTimeMillis() - time));
     }
@@ -121,6 +125,7 @@ public class Searcher {
                     break;
             }
         }
+
         return result;
     }
 
@@ -130,21 +135,26 @@ public class Searcher {
      * @param prefix ввод пользователя
      * @return результат сравнения от -1 до 1
      */
-    private static long prefixCompare(String columnValue, String prefix) {
+    private long prefixCompare(String columnValue, String prefix) {
         for (int i = 0; i < prefix.length(); i++) {
+
             if (i == columnValue.length()) {
                 return -1;
             }
+
             int result = Character.compare(columnValue.charAt(i), prefix.charAt(i));
+
             if (result != 0) {
                 return result > 0 ? 1 : -1;
             }
+
         }
+
         return 0;
     }
 
     /**
-     * Поиск колонки
+     * Возвращает значение колонки
      * @param line строка файла
      * @return значение колонки
      */
@@ -163,6 +173,7 @@ public class Searcher {
         for (int i = 0; i < column - 1; i++) {
             str.append(arrayOfLine[i].concat(","));
         }
+
         return str.toString().length() - 1;
     }
 }

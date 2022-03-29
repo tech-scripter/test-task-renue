@@ -11,16 +11,14 @@ import java.io.IOException;
 
 
 @Component
-public class ScheduledTasks {
-
+public class Scheduler {
     @Value("${search.column}")
     private int searchColumn;
-
     private final ApplicationArguments applicationArguments;
 
     // Dependency Injection
     @Autowired
-    public ScheduledTasks(ApplicationArguments applicationArguments) {
+    public Scheduler(ApplicationArguments applicationArguments) {
         this.applicationArguments = applicationArguments;
     }
 
@@ -28,7 +26,7 @@ public class ScheduledTasks {
      * Запускает поисковик через каждые 5 мс
      */
     @Scheduled(fixedRate = 5000)
-    public void findAirports() {
+    public void scheduleSearching() {
         try {
             if (applicationArguments.getSourceArgs().length != 0) {
                 try {

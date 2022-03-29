@@ -23,6 +23,7 @@ public class Reader {
             System.err.println("Некорректный ввод\n");
             readConsole();
         }
+
         return input;
     }
 }
