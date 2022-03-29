@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @AllArgsConstructor
 @Getter
-public final class IndexItem {
+public class IndexItem {
     private final String columnValue;
     private final long offset;
 

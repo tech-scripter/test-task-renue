@@ -1,5 +1,6 @@
 package com.vlasnagibin.project.config;
 
+import com.vlasnagibin.project.exception.EmptyFileException;
 import com.vlasnagibin.project.searcher.Searcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,23 +24,28 @@ public class Scheduler {
     }
 
     /**
-     * Запускает поисковик через каждые 5 мс
+     * Запускает поисковик через каждые 3 мс
      */
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 3000)
     public void scheduleSearching() {
         try {
             if (applicationArguments.getSourceArgs().length != 0) {
                 try {
                     searchColumn = Integer.parseInt(applicationArguments.getSourceArgs()[0]);
                 } catch (NumberFormatException e) {
-                    System.err.println("Ошибка! Неверный формат колонки.");
+                    System.err.println("Неверный формат колонки!");
                     e.printStackTrace();
                 }
             }
             Searcher searcher = new Searcher(searchColumn);
             searcher.run();
+
+        } catch (EmptyFileException e) {
+            System.err.println("Пустой файл!");
+            e.printStackTrace();
         } catch (IOException e) {
-            System.err.println();
+            System.err.println("Файл не найден!");
+            e.printStackTrace();
         }
     }
 }

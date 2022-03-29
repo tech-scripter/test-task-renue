@@ -1,5 +1,6 @@
 package com.vlasnagibin.project.searcher;
 
+import com.vlasnagibin.project.exception.EmptyFileException;
 import com.vlasnagibin.project.pojo.IndexItem;
 import com.vlasnagibin.project.reader.Reader;
 
@@ -22,16 +23,23 @@ public class Searcher {
     /**
      * Запускает поиск
      */
-    public void run() {
-        try {
-            readFile();
-            Reader reader = new Reader();
-            String userInput = reader.readConsole();
-            System.out.println();
-            search(userInput);
-        } catch (RuntimeException e) {
-            System.err.println("Что-то пошло не так! Перезапустите программу.");
-            e.printStackTrace();
+    public void run() throws EmptyFileException {
+        checkFileIfEmpty();
+        readFile();
+        Reader reader = new Reader();
+        String userInput = reader.readConsole();
+        System.out.println();
+        search(userInput);
+    }
+
+    /**
+     * Проверяет наличие записей в файле
+     */
+    private void checkFileIfEmpty() throws EmptyFileException {
+        File file = new File(path);
+
+        if (file.length() == 0) {
+            throw new EmptyFileException("Пустой файл");
         }
     }
 
