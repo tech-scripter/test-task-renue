@@ -7,6 +7,9 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
+
 @Component
 public class ScheduledTasks {
 
@@ -23,16 +26,20 @@ public class ScheduledTasks {
     @Scheduled(fixedRate = 5000)
     public void findAirports() {
         long memory = Runtime.getRuntime().freeMemory();
-        if (applicationArguments.getSourceArgs().length != 0) {
-            try {
-                searchColumn = Integer.parseInt(applicationArguments.getSourceArgs()[0]);
-            } catch (NumberFormatException e) {
-                System.err.println("Ошибка! Неверный формат колонки.");
-                e.printStackTrace();
+        try {
+            if (applicationArguments.getSourceArgs().length != 0) {
+                try {
+                    searchColumn = Integer.parseInt(applicationArguments.getSourceArgs()[0]);
+                } catch (NumberFormatException e) {
+                    System.err.println("Ошибка! Неверный формат колонки.");
+                    e.printStackTrace();
+                }
             }
+            Searcher searcher = new Searcher(searchColumn);
+            searcher.run();
+        } catch (IOException e) {
+            System.err.println();
         }
-        Searcher searcher = new Searcher(2);
-        searcher.run();
         long end = Runtime.getRuntime().freeMemory();
         long memoTaken = memory - end;
         System.out.printf("Памяти использовано: %f%n", memoTaken / 1e+6);

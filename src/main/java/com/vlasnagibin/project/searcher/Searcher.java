@@ -2,16 +2,20 @@ package com.vlasnagibin.project.searcher;
 
 import com.vlasnagibin.project.reader.Reader;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class Searcher {
 
-    private final String path = "C:\\Users\\Vlas\\Desktop\\airports.csv";
+    private final String FILE_NAME = "airports.csv";
+    private final Path path = Paths.get(new File(".").getCanonicalPath(), FILE_NAME);
     private final int column;
 
-    public Searcher(int column) {
+    public Searcher(int column) throws IOException {
         this.column = column;
     }
 
@@ -37,7 +41,7 @@ public class Searcher {
      */
     private Map<String, Long> readFile(String userInput) {
         HashMap<String, Long> hashMap = new HashMap<>();
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile(path, "r")) {
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(path.toString(), "r")) {
             String row;
             String columnValue;
             long offset;
@@ -63,7 +67,7 @@ public class Searcher {
         long time = System.currentTimeMillis();
         Map<String, Long> map = readFile(userInput);
         Set<String> keySet = map.keySet();
-        try (RandomAccessFile randomAccessFile = new RandomAccessFile(path, "r")) {
+        try (RandomAccessFile randomAccessFile = new RandomAccessFile(path.toString(), "r")) {
             for (String key : keySet) {
                 if (key.startsWith(userInput)) {
                     randomAccessFile.seek(map.get(key));
