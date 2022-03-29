@@ -144,11 +144,12 @@ public class Searcher {
     }
 
     /**
+     * Поиск колонки
      * @param line строка файла
      * @return значение колонки
      */
     private String getColumnValue(String line) {
-        return line.split(",")[column - 1].replace("\"", "");
+        return line.split(",")[column - 1].replace("\"", "");   // Переделать -> не оптимизировано
     }
 
     /**
