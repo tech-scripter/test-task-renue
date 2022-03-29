@@ -29,7 +29,6 @@ public class ScheduledTasks {
      */
     @Scheduled(fixedRate = 5000)
     public void findAirports() {
-        long memory = Runtime.getRuntime().freeMemory();
         try {
             if (applicationArguments.getSourceArgs().length != 0) {
                 try {
@@ -44,8 +43,5 @@ public class ScheduledTasks {
         } catch (IOException e) {
             System.err.println();
         }
-        long end = Runtime.getRuntime().freeMemory();
-        long memoTaken = memory - end;
-        System.out.printf("Памяти использовано: %f%n", memoTaken / 1e+6);
     }
 }

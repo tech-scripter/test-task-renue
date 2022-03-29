@@ -27,6 +27,7 @@ public class Searcher {
             readFile();
             Reader reader = new Reader();
             String userInput = reader.readConsole();
+            System.out.println();
             search(userInput);
         } catch (RuntimeException e) {
             System.err.println("Что-то пошло не так! Перезапустите программу.");
