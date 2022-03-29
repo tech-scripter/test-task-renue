@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class Reader {
 
     /**
-     * Чтение пользовательского ввода - желаемую строку для поиска
+     * Чтение пользовательского ввода - желаемая строка для поиска
      * @return ввод пользователя
      */
     public String readConsole() {
@@ -23,7 +23,6 @@ public class Reader {
             System.err.println("Некорректный ввод\n");
             readConsole();
         }
-
         return input;
     }
 }

@@ -18,11 +18,15 @@ public class ScheduledTasks {
 
     private final ApplicationArguments applicationArguments;
 
+    // Dependency Injection
     @Autowired
     public ScheduledTasks(ApplicationArguments applicationArguments) {
         this.applicationArguments = applicationArguments;
     }
 
+    /**
+     * Запускает поисковик через каждые 5 мс
+     */
     @Scheduled(fixedRate = 5000)
     public void findAirports() {
         long memory = Runtime.getRuntime().freeMemory();
