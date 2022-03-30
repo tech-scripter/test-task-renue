@@ -39,7 +39,7 @@ public class Searcher {
         File file = new File(path);
 
         if (file.length() == 0) {
-            throw new EmptyFileException("Пустой файл");
+            throw new EmptyFileException("Пустой файл!");
         }
     }
 
